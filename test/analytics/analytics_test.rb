@@ -5,8 +5,8 @@ require 'misty/openstack/analytics'
 
 describe "analytics-masterdata features" do
 
-  it "GET requests project" do
-    VCR.use_cassette "requesting project masterdata" do
+  it "GET requests domain" do
+    VCR.use_cassette "requesting domain masterdata" do
       
       cloud = Misty::Cloud.new(
         :auth             => auth_domain,

@@ -3,7 +3,7 @@ require 'misty'
 module Misty
 
   @services_plus_limes = self.services
-  @services_plus_limes.add(:"sapcc-analytic", :analytics, ["v1"])
+  @services_plus_limes.add(:"sapcc-analytic", :analytics, ["v2"])
 
   def self.services
     @services_plus_limes
@@ -17,7 +17,7 @@ module Misty
 
   module Openstack
     module Analytics
-      autoload :V1, "misty/openstack/analytics/v1"
+      autoload :V2, "misty/openstack/analytics/v2"
     end
   end
   
