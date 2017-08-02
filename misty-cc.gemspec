@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Hans-Georg Winkler"]
   spec.email         = ["hans-georg.winkler@sap.com"]
 
-  spec.summary       = %q{OpenStack Analytics provider gem}
-  spec.description   = %q{OpenStack Analytics provider gem}
+  spec.summary       = %q{OpenStack ConvergedCloud provider gem}
+  spec.description   = %q{OpenStack ConvergedCloud provider gem}
   spec.license       = "Apache-2.0"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
