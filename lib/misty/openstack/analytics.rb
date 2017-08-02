@@ -3,7 +3,7 @@ require 'misty'
 module Misty
 
   @services_plus_limes = self.services
-  @services_plus_limes.add(:"sapcc-analytic", :analytics, ["v2"])
+  @services_plus_limes.add(:"sapcc-analytics", :analytics, ["v2"])
 
   def self.services
     @services_plus_limes
@@ -11,7 +11,7 @@ module Misty
 
   class Cloud
     def masterdata
-      @masterdata ||= build_service(:"sapcc-analytic")
+      @masterdata ||= build_service(:"sapcc-analytics")
     end
   end
 
