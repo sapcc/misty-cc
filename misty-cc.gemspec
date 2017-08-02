@@ -1,17 +1,16 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'misty/openstack/analytics/version'
+require 'misty/openstack/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "misty-analytics"
-  spec.version       = Misty::Openstack::Analytics::VERSION
+  spec.name          = "misty-cc"
+  spec.version       = Misty::Openstack::ConvergedCloud::VERSION
   spec.authors       = ["Hans-Georg Winkler"]
   spec.email         = ["hans-georg.winkler@sap.com"]
 
   spec.summary       = %q{OpenStack Analytics provider gem}
   spec.description   = %q{OpenStack Analytics provider gem}
-  spec.homepage      = "https://billing.eu-de-1.cloud.sap:64000/masterdata/#"
   spec.license       = "Apache-2.0"
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }

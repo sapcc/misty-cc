@@ -1,6 +1,6 @@
 module Misty
   module Openstack
-    module Analytics
+    module ConvergedCloud
       VERSION = "0.0.1"
     end
   end
