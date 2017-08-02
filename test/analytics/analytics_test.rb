@@ -1,12 +1,12 @@
 require 'test_helper'
-require 'misty/openstack/analytics'
+require 'misty/openstack/cc'
 
 # http://docs.seattlerb.org/minitest/
 
 describe "analytics-masterdata features" do
 
   it "handle domain scope" do
-    VCR.use_cassette "setting domain masterdata" do
+    VCR.use_cassette "analytics setting domain masterdata" do
       
       cloud = Misty::Cloud.new(
         :auth             => auth_domain,
@@ -31,7 +31,7 @@ describe "analytics-masterdata features" do
       response.code.must_equal "204"
     end
 
-    VCR.use_cassette "getting domain masterdata" do
+    VCR.use_cassette "analytics getting domain masterdata" do
       
       cloud = Misty::Cloud.new(
         :auth             => auth_domain,
@@ -54,7 +54,7 @@ describe "analytics-masterdata features" do
 
     end
 
-    VCR.use_cassette "update domain masterdata" do
+    VCR.use_cassette "analytics update domain masterdata" do
       
       cloud = Misty::Cloud.new(
         :auth             => auth_domain,
@@ -79,7 +79,7 @@ describe "analytics-masterdata features" do
 
     end
     
-    VCR.use_cassette "check updated domain masterdata" do
+    VCR.use_cassette "analytics check updated domain masterdata" do
       
       cloud = Misty::Cloud.new(
         :auth             => auth_domain,
@@ -100,7 +100,7 @@ describe "analytics-masterdata features" do
 
     end
 
-    VCR.use_cassette "check inheritance for domain" do
+    VCR.use_cassette "analytics check inheritance for domain" do
       
       cloud = Misty::Cloud.new(
         :auth             => auth_domain,
@@ -122,7 +122,7 @@ describe "analytics-masterdata features" do
 
   it "handle project scope" do
 
-    VCR.use_cassette "set blank project masterdata domain" do
+    VCR.use_cassette "analytics set blank project masterdata domain" do
       
       cloud = Misty::Cloud.new(
         :auth             => auth_project,
@@ -145,7 +145,7 @@ describe "analytics-masterdata features" do
 
     end
 
-    VCR.use_cassette "check inherited domain masterdata" do
+    VCR.use_cassette "analytics check inherited domain masterdata" do
       
      cloud = Misty::Cloud.new(
         :auth             => auth_project,
@@ -163,7 +163,7 @@ describe "analytics-masterdata features" do
         
     end
 
-    VCR.use_cassette "setting own project and disabling inheritance for masterdata" do
+    VCR.use_cassette "analytics setting own project and disabling inheritance for masterdata" do
       
       cloud = Misty::Cloud.new(
         :auth             => auth_project,
@@ -197,7 +197,7 @@ describe "analytics-masterdata features" do
       response.code.must_equal "204"
     end
 
-    VCR.use_cassette "check project masterdata" do
+    VCR.use_cassette "analytics check project masterdata" do
      cloud = Misty::Cloud.new(
         :auth             => auth_project,
         :region_id        => ENV["TEST_REGION_ID"],
@@ -230,7 +230,7 @@ describe "analytics-masterdata features" do
 
     end
 
-    VCR.use_cassette "update project masterdata" do
+    VCR.use_cassette "analytics update project masterdata" do
       
       cloud = Misty::Cloud.new(
         :auth             => auth_project,
@@ -264,7 +264,7 @@ describe "analytics-masterdata features" do
       response.code.must_equal "204"
     end
 
-    VCR.use_cassette "check updated project masterdata" do
+    VCR.use_cassette "analytics check updated project masterdata" do
      cloud = Misty::Cloud.new(
         :auth             => auth_project,
         :region_id        => ENV["TEST_REGION_ID"],
@@ -314,7 +314,7 @@ describe "analytics-masterdata features" do
 
     end
 
-    VCR.use_cassette "check inherited domain masterdata again" do
+    VCR.use_cassette "analytics check inherited domain masterdata again" do
       
      cloud = Misty::Cloud.new(
         :auth             => auth_project,
