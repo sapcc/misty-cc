@@ -1,6 +1,6 @@
 # Misty::Openstack::CC
 
-This is the misty plugin Gem to consume SAPs Converged Cloud Openstack Services.
+This is a Gem to extend misty with SAPs Converged Cloud Openstack Services.
 
 Currently supported services are
 
