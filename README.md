@@ -1,6 +1,6 @@
 # Misty::Openstack::CC
 
-This is a Gem to extend misty with SAPs ConvergedCloud Openstack Services.
+This Gem to extend [misty](https://github.com/flystack/misty/) with SAPs ConvergedCloud Openstack Services.
 
 Currently supported services are
 
