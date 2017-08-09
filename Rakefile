@@ -1,22 +1,32 @@
 require 'dotenv/tasks'
 require 'rake/testtask'
 
-desc "Run limes tests"
-task :limes => [:dotenv] do
+desc "Run all tests"
+task :all => [:dotenv] do
   Rake::TestTask.new do |t|
-    t.name = 'limes'
-    t.libs << "test/limes"
-    t.test_files = FileList['test/limes/*_test.rb']
+    t.name = 'all'
+    t.libs << "test/integration"
+    t.test_files = FileList['test/integration/*_test.rb']
     t.verbose = true
   end
 end
 
-desc "Run analytics tests"
-task :analytics => [:dotenv] do
+desc "Run resources tests"
+task :resources => [:dotenv] do
   Rake::TestTask.new do |t|
-    t.name = 'analytics'
-    t.libs << "test/analytics"
-    t.test_files = FileList['test/analytics/*_test.rb']
+    t.name = 'resources'
+    t.libs << "test/integration"
+    t.test_files = FileList['test/integration/resources_test.rb']
+    t.verbose = true
+  end
+end
+
+desc "Run masterdata tests"
+task :masterdata => [:dotenv] do
+  Rake::TestTask.new do |t|
+    t.name = 'masterdata'
+    t.libs << "test/integration"
+    t.test_files = FileList['test/integration/masterdata_test.rb']
     t.verbose = true
   end
 end
