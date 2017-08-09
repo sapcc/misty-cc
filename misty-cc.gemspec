@@ -5,7 +5,7 @@ require 'misty/openstack/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "misty-cc"
-  spec.version       = Misty::Openstack::ConvergedCloud::VERSION
+  spec.version       = "0.1.0"
   spec.authors       = ["Hans-Georg Winkler"]
   spec.email         = ["hans-georg.winkler@sap.com"]
 
