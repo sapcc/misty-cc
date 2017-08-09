@@ -47,7 +47,6 @@ cloud = Misty::Cloud.new(
             :auth => auth_v3,
             :region_id => "staging",
             :log_level => 2,
-            :masterdata  => { :api_version => "v2" }
         )
 
 # PROJECT SCOPE
@@ -114,8 +113,7 @@ cloud.resources.set_quota_for_domain(DOMAIN_ID, "domain" => new_quota)
 2. RUN gem install bundler
 3. Run `bundle install --with=development`
 4. rename dotenv to .env
-5. run `bundle exec rake analytics`
-6. run `bundle exec rake limes`
+5. run `bundle exec rake all`
 
 ### Note: 
 * if you need to rerun the tests without vcr tapes you need to set your env variables first, take a look to the dotenv file
