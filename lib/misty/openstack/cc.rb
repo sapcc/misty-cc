@@ -5,10 +5,14 @@ module Misty
 
   @services_plus_limes = self.services
   
+  # name    = openstack_type
+  # project = openstack_name
+  # @services_plus_limes.add(:name, :project, ["version"])
+  
   # resource and quota management
   @services_plus_limes.add(:resources, :limes, ["v1"])
-  # masterdata, billing and analytics
-  @services_plus_limes.add(:"sapcc-analytics", :analytics, ["v2"])
+  # masterdata
+  @services_plus_limes.add(:masterdata, :ccmasterdata, ["v2"])
 
   def self.services
     @services_plus_limes
@@ -20,7 +24,7 @@ module Misty
     end
     
     def masterdata
-      @masterdata ||= build_service(:"sapcc-analytics")
+      @masterdata ||= build_service(:masterdata)
     end  
   end
 
@@ -29,8 +33,8 @@ module Misty
       autoload :V1, "misty/openstack/limes/v1"
     end
 
-    module Analytics
-      autoload :V2, "misty/openstack/analytics/v2"
+    module Ccmasterdata
+      autoload :V2, "misty/openstack/ccmasterdata/v2"
     end
   end
 end

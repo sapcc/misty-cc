@@ -1,4 +1,4 @@
-module Misty::Openstack::AnalyticsV2
+module Misty::Openstack::CcmasterdataV2
   def v2
     {
       "/masterdata/projects/{project_id}" => {:GET=>[:get_project], :PUT=>[:set_project]},
