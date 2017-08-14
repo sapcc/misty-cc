@@ -6,7 +6,7 @@ require 'misty/openstack/cc'
 describe "Masterdata Service CC-Masterdata features" do
 
   it "handle domain scope" do
-    VCR.use_cassette "analytics setting domain masterdata" do
+    VCR.use_cassette "setting domain masterdata" do
       
       cloud = Misty::Cloud.new(
         :auth             => auth_domain,
@@ -30,7 +30,7 @@ describe "Masterdata Service CC-Masterdata features" do
       response.code.must_equal "204"
     end
 
-    VCR.use_cassette "analytics getting domain masterdata" do
+    VCR.use_cassette "getting domain masterdata" do
       
       cloud = Misty::Cloud.new(
         :auth             => auth_domain,
@@ -42,18 +42,18 @@ describe "Masterdata Service CC-Masterdata features" do
       
       response = cloud.masterdata.get_domain(ENV["TEST_DOMAIN_ID"])
       response.code.must_equal "200"
-      assert_equal ENV["TEST_DOMAIN_ID"], response.body["DOMAIN_ID"], "check for domain id"
-      assert_equal ENV["TEST_DOMAIN_NAME"], response.body["DOMAIN_NAME"], "check for domain name"
-      assert_equal "MyDomain is about providing important things", response.body["DESCRIPTION"], "check for domain description"
-      assert_equal 1, response.body["PROJECTS_CAN_INHERIT"], "check for domain projects_can_inherit"
-      assert_equal "D000000", response.body["RESPONSIBLE_CONTROLLER_ID"], "check for domain responsible_controller_id"
-      assert_equal "myDL@sap.com", response.body["RESPONSIBLE_CONTROLLER_EMAIL"], "check for domain responsible_controller_email"
-      assert_equal "110377", response.body["COST_OBJECT"]["NAME"], "check for domain cost_object name"
-      assert_equal "IO", response.body["COST_OBJECT"]["TYPE"], "check for domain cost_object type"
+      assert_equal ENV["TEST_DOMAIN_ID"], response.body["domain_id"], "check for domain id"
+      assert_equal ENV["TEST_DOMAIN_NAME"], response.body["domain_name"], "check for domain name"
+      assert_equal "MyDomain is about providing important things", response.body["description"], "check for domain description"
+      assert_equal 1, response.body["projects_can_inherit"], "check for domain projects_can_inherit"
+      assert_equal "D000000", response.body["responsible_controller_id"], "check for domain responsible_controller_id"
+      assert_equal "myDL@sap.com", response.body["responsible_controller_email"], "check for domain responsible_controller_email"
+      assert_equal "110377", response.body["cost_object"]["name"], "check for domain cost_object name"
+      assert_equal "IO", response.body["cost_object"]["type"], "check for domain cost_object type"
 
     end
 
-    VCR.use_cassette "analytics update domain masterdata" do
+    VCR.use_cassette "update domain masterdata" do
       
       cloud = Misty::Cloud.new(
         :auth             => auth_domain,
@@ -70,6 +70,7 @@ describe "Masterdata Service CC-Masterdata features" do
         "cost_object": {
             "type": "IO",
             "name": "11031977",
+            "projects_can_inherit": true,
         }
       }
 
@@ -78,7 +79,7 @@ describe "Masterdata Service CC-Masterdata features" do
 
     end
     
-    VCR.use_cassette "analytics check updated domain masterdata" do
+    VCR.use_cassette "check updated domain masterdata" do
       
       cloud = Misty::Cloud.new(
         :auth             => auth_domain,
@@ -90,12 +91,12 @@ describe "Masterdata Service CC-Masterdata features" do
       
       response = cloud.masterdata.get_domain(ENV["TEST_DOMAIN_ID"])
       response.code.must_equal "200"
-      assert_equal "MyDomain is about providing very important things", response.body["DESCRIPTION"], "check for domain description"
-      assert_equal 1, response.body["PROJECTS_CAN_INHERIT"], "check for domain projects_can_inherit"
-      assert_equal "D123456", response.body["RESPONSIBLE_CONTROLLER_ID"], "check for domain responsible_controller_id"
-      assert_equal "myNewDL@sap.com", response.body["RESPONSIBLE_CONTROLLER_EMAIL"], "check for domain responsible_controller_email"
-      assert_equal "11031977", response.body["COST_OBJECT"]["NAME"], "check for domain cost_object name"
-      assert_equal "IO", response.body["COST_OBJECT"]["TYPE"], "check for domain cost_object type"
+      assert_equal "MyDomain is about providing very important things", response.body["description"], "check for domain description"
+      assert_equal 1, response.body["projects_can_inherit"], "check for domain projects_can_inherit"
+      assert_equal "D123456", response.body["responsible_controller_id"], "check for domain responsible_controller_id"
+      assert_equal "myNewDL@sap.com", response.body["responsible_controller_email"], "check for domain responsible_controller_email"
+      assert_equal "11031977", response.body["cost_object"]["name"], "check for domain cost_object name"
+      assert_equal "IO", response.body["cost_object"]["type"], "check for domain cost_object type"
 
     end
 
@@ -111,9 +112,9 @@ describe "Masterdata Service CC-Masterdata features" do
       
       response = cloud.masterdata.inheritance('domain_id' => ENV["TEST_DOMAIN_ID"])
       response.code.must_equal "200"
-      assert_equal true, response.body["CO_INHERITABLE"], "check inheritance"
-      assert_equal "11031977", response.body["COST_OBJECT"]["NAME"], "check for domain cost_object name"
-      assert_equal "IO", response.body["COST_OBJECT"]["TYPE"], "check for domain cost_object type"
+      assert_equal true, response.body["co_inheritable"], "check inheritance"
+      assert_equal "11031977", response.body["cost_object"]["name"], "check for domain cost_object name"
+      assert_equal "IO", response.body["cost_object"]["type"], "check for domain cost_object type"
     
     end
     
@@ -121,7 +122,7 @@ describe "Masterdata Service CC-Masterdata features" do
 
   it "handle project scope" do
 
-    VCR.use_cassette "analytics set blank project masterdata domain" do
+    VCR.use_cassette "set blank project masterdata domain" do
       
       cloud = Misty::Cloud.new(
         :auth             => auth_project,
@@ -144,9 +145,9 @@ describe "Masterdata Service CC-Masterdata features" do
 
     end
 
-    VCR.use_cassette "analytics check inherited domain masterdata" do
+    VCR.use_cassette "check inherited domain masterdata" do
       
-     cloud = Misty::Cloud.new(
+      cloud = Misty::Cloud.new(
         :auth             => auth_project,
         :region_id        => ENV["TEST_REGION_ID"],
         :log_level        => 2,
@@ -156,13 +157,13 @@ describe "Masterdata Service CC-Masterdata features" do
 
         response = cloud.masterdata.get_project(ENV["TEST_PROJECT_ID"])
         response.code.must_equal "200"
-        assert_equal "11031977", response.body["COST_OBJECT"]["NAME"], "check for inherited domain cost_object name"
-        assert_equal "IO", response.body["COST_OBJECT"]["TYPE"], "check for inherited domain cost_object type"
-        assert_equal true, response.body["COST_OBJECT"]["CO_INHERITED"], "check for inherited flag"
+        assert_equal "11031977", response.body["cost_object"]["name"], "check for inherited domain cost_object name"
+        assert_equal "IO", response.body["cost_object"]["type"], "check for inherited domain cost_object type"
+        assert_equal true, response.body["cost_object"]["co_inherited"], "check for inherited flag"
         
     end
 
-    VCR.use_cassette "analytics setting own project and disabling inheritance for masterdata" do
+    VCR.use_cassette "setting own project and disabling inheritance for masterdata" do
       
       cloud = Misty::Cloud.new(
         :auth             => auth_project,
@@ -196,7 +197,7 @@ describe "Masterdata Service CC-Masterdata features" do
       response.code.must_equal "204"
     end
 
-    VCR.use_cassette "analytics check project masterdata" do
+    VCR.use_cassette "check project masterdata" do
      cloud = Misty::Cloud.new(
         :auth             => auth_project,
         :region_id        => ENV["TEST_REGION_ID"],
@@ -207,29 +208,27 @@ describe "Masterdata Service CC-Masterdata features" do
 
         response = cloud.masterdata.get_project(ENV["TEST_PROJECT_ID"])
         response.code.must_equal "200"
-        assert_equal ENV["TEST_PROJECT_ID"], response.body["PROJECT_ID"], "check for project id"
-        #assert_equal ENV["TEST_PROJECT_NAME"], response.body["PROJECT_NAME"], "check for project name"
-        #assert_equal ENV["TEST_DOMAIN_ID"], response.body["DOMAIN_ID"], "check for related domain id"
-        assert_equal ENV["TEST_DOMAIN_ID"], response.body["PARENT_ID"], "check for parent id"
-        assert_equal "300494998", response.body["COST_OBJECT"]["NAME"], "check for own project cost_object name"
-        assert_equal "CC", response.body["COST_OBJECT"]["TYPE"], "check for own project cost_object type"
-        assert_equal false, response.body["COST_OBJECT"]["CO_INHERITED"], "check for inheritence flag"
-        assert_equal "D000000", response.body["RESPONSIBLE_OPERATOR_ID"], "check for responsible_operator_id"
-        assert_equal "DL1337@sap.com", response.body["RESPONSIBLE_OPERATOR_EMAIL"], "check for responsible_operator_email"
-        assert_equal "D000000", response.body["RESPONSIBLE_SECURITY_EXPERT_ID"], "check for responsible_security_expert_id"
-        assert_equal "myName@sap.com", response.body["RESPONSIBLE_SECURITY_EXPERT_EMAIL"], "check for responsible_security_expert_email"
-        assert_equal "D000000", response.body["RESPONSIBLE_PRODUCT_OWNER_ID"], "check for responsible_product_owner_id"
-        assert_equal "myName@sap.com", response.body["RESPONSIBLE_PRODUCT_OWNER_EMAIL"], "check for esponsible_product_owner_email"
-        assert_equal "D000000", response.body["RESPONSIBLE_CONTROLLER_ID"], "check for responsible_controller_id"
-        assert_equal "myName@sap.com", response.body["RESPONSIBLE_CONTROLLER_EMAIL"], "check for responsible_controller_email"
-        assert_equal "generating", response.body["REVENUE_RELEVANCE"], "check for revenue_relevance"
-        assert_equal "prod", response.body["BUSINESS_CRITICALITY"], "check for business_criticality"
-        assert_equal "SAPCloud", response.body["SOLUTION"], "check for solution"
-        assert_equal 100, response.body["NUMBER_OF_ENDUSERS"], "check for number_of_endusers"
+        assert_equal ENV["TEST_PROJECT_ID"], response.body["project_id"], "check for project id"
+        assert_equal ENV["TEST_DOMAIN_ID"], response.body["parent_id"], "check for parent id"
+        assert_equal "300494998", response.body["cost_object"]["name"], "check for own project cost_object name"
+        assert_equal "CC", response.body["cost_object"]["type"], "check for own project cost_object type"
+        assert_equal false, response.body["cost_object"]["co_inherited"], "check for inheritence flag"
+        assert_equal "D000000", response.body["responsible_operator_id"], "check for responsible_operator_id"
+        assert_equal "DL1337@sap.com", response.body["responsible_operator_email"], "check for responsible_operator_email"
+        assert_equal "D000000", response.body["responsible_security_expert_id"], "check for responsible_security_expert_id"
+        assert_equal "myName@sap.com", response.body["responsible_security_expert_email"], "check for responsible_security_expert_email"
+        assert_equal "D000000", response.body["responsible_product_owner_id"], "check for responsible_product_owner_id"
+        assert_equal "myName@sap.com", response.body["responsible_product_owner_email"], "check for esponsible_product_owner_email"
+        assert_equal "D000000", response.body["responsible_controller_id"], "check for responsible_controller_id"
+        assert_equal "myName@sap.com", response.body["responsible_controller_email"], "check for responsible_controller_email"
+        assert_equal "generating", response.body["revenue_relevance"], "check for revenue_relevance"
+        assert_equal "prod", response.body["business_criticality"], "check for business_criticality"
+        assert_equal "SAPCloud", response.body["solution"], "check for solution"
+        assert_equal 100, response.body["number_of_endusers"], "check for number_of_endusers"
 
     end
 
-    VCR.use_cassette "analytics update project masterdata" do
+    VCR.use_cassette "update project masterdata" do
       
       cloud = Misty::Cloud.new(
         :auth             => auth_project,
@@ -263,7 +262,7 @@ describe "Masterdata Service CC-Masterdata features" do
       response.code.must_equal "204"
     end
 
-    VCR.use_cassette "analytics check updated project masterdata" do
+    VCR.use_cassette "check updated project masterdata" do
      cloud = Misty::Cloud.new(
         :auth             => auth_project,
         :region_id        => ENV["TEST_REGION_ID"],
@@ -274,19 +273,19 @@ describe "Masterdata Service CC-Masterdata features" do
 
         response = cloud.masterdata.get_project(ENV["TEST_PROJECT_ID"])
         response.code.must_equal "200"
-        assert_equal "132123123213", response.body["COST_OBJECT"]["NAME"], "check for updated project cost_object name"
-        assert_equal "IO", response.body["COST_OBJECT"]["TYPE"], "check for updated project cost_object type"
-        assert_equal "D123456", response.body["RESPONSIBLE_OPERATOR_ID"], "check for updated responsible_operator_id"
-        assert_equal "DLBLA@sap.com", response.body["RESPONSIBLE_OPERATOR_EMAIL"], "check for updated responsible_operator_email"
-        assert_equal "D123456", response.body["RESPONSIBLE_SECURITY_EXPERT_ID"], "check for updated responsible_security_expert_id"
-        assert_equal "myNewName@sap.com", response.body["RESPONSIBLE_SECURITY_EXPERT_EMAIL"], "check for updated responsible_security_expert_email"
-        assert_equal "D123456", response.body["RESPONSIBLE_PRODUCT_OWNER_ID"], "check for updated responsible_product_owner_id"
-        assert_equal "myNewName@sap.com", response.body["RESPONSIBLE_PRODUCT_OWNER_EMAIL"], "check for updated esponsible_product_owner_email"
-        assert_equal "D123456", response.body["RESPONSIBLE_CONTROLLER_ID"], "check for updated responsible_controller_id"
-        assert_equal "myNewName@sap.com", response.body["RESPONSIBLE_CONTROLLER_EMAIL"], "check for updated responsible_controller_email"
-        assert_equal "staging", response.body["BUSINESS_CRITICALITY"], "check for updated business_criticality"
-        assert_equal "CCloud", response.body["SOLUTION"], "check for updated solution"
-        assert_equal 10000, response.body["NUMBER_OF_ENDUSERS"], "check updated for number_of_endusers"
+        assert_equal "132123123213", response.body["cost_object"]["name"], "check for updated project cost_object name"
+        assert_equal "IO", response.body["cost_object"]["type"], "check for updated project cost_object type"
+        assert_equal "D123456", response.body["responsible_operator_id"], "check for updated responsible_operator_id"
+        assert_equal "DLBLA@sap.com", response.body["responsible_operator_email"], "check for updated responsible_operator_email"
+        assert_equal "D123456", response.body["responsible_security_expert_id"], "check for updated responsible_security_expert_id"
+        assert_equal "myNewName@sap.com", response.body["responsible_security_expert_email"], "check for updated responsible_security_expert_email"
+        assert_equal "D123456", response.body["responsible_product_owner_id"], "check for updated responsible_product_owner_id"
+        assert_equal "myNewName@sap.com", response.body["responsible_product_owner_email"], "check for updated esponsible_product_owner_email"
+        assert_equal "D123456", response.body["responsible_controller_id"], "check for updated responsible_controller_id"
+        assert_equal "myNewName@sap.com", response.body["responsible_controller_email"], "check for updated responsible_controller_email"
+        assert_equal "staging", response.body["business_criticality"], "check for updated business_criticality"
+        assert_equal "CCloud", response.body["solution"], "check for updated solution"
+        assert_equal 10000, response.body["number_of_endusers"], "check updated for number_of_endusers"
 
     end
 
@@ -313,7 +312,7 @@ describe "Masterdata Service CC-Masterdata features" do
 
     end
 
-    VCR.use_cassette "analytics check inherited domain masterdata again" do
+    VCR.use_cassette "check inherited domain masterdata again" do
       
      cloud = Misty::Cloud.new(
         :auth             => auth_project,
@@ -325,9 +324,9 @@ describe "Masterdata Service CC-Masterdata features" do
 
         response = cloud.masterdata.get_project(ENV["TEST_PROJECT_ID"])
         response.code.must_equal "200"
-        assert_equal "11031977", response.body["COST_OBJECT"]["NAME"], "check for inherited domain cost_object name"
-        assert_equal "IO", response.body["COST_OBJECT"]["TYPE"], "check for inherited domain cost_object type"
-        assert_equal true, response.body["COST_OBJECT"]["CO_INHERITED"], "check for inherited flag"
+        assert_equal "11031977", response.body["cost_object"]["name"], "check for inherited domain cost_object name"
+        assert_equal "IO", response.body["cost_object"]["type"], "check for inherited domain cost_object type"
+        assert_equal true, response.body["cost_object"]["co_inherited"], "check for inherited flag"
         
     end
 
