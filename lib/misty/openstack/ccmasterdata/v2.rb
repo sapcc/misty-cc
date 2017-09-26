@@ -13,7 +13,7 @@ module Misty
 
         def self.service_names
           # this is used to find the correct endpoint (type) in the service catalog
-          %w{sapcc-analytics}
+          %w{sapcc-billing}
         end
       end
     end
