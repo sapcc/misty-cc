@@ -10,9 +10,9 @@ module Misty
   # @services_plus_limes.add(:name, :project, ["version"])
   
   # resource and quota management
-  @services_plus_limes.add(:resources, :limes, ["v1"])
+  @services_plus_limes.add({name: :resources, project: :limes, versions: ["v1"]})
   # masterdata
-  @services_plus_limes.add(:masterdata, :ccmasterdata, ["v2"])
+  @services_plus_limes.add({name: :masterdata, project: :ccmasterdata, versions: ["v2"]})
 
   def self.services
     @services_plus_limes
