@@ -44,7 +44,7 @@ module Misty
     end
     
     module Maia
-      autoload :V2, "misty/openstack/maia/v1"
+      autoload :V1, "misty/openstack/maia/v1"
     end
   end
 end

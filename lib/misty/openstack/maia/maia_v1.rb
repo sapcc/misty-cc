@@ -3,12 +3,10 @@ module Misty::Openstack::MaiaV1
     {
       # https://prometheus.io/docs/prometheus/latest/querying/api/
       # Note: the query string is the last parameter and automatically added if existing
-      "/api/v1/query" => {:GET=>[:query]},
-      "/api/v1/query_range" => {:GET=>[:query_range]},
-      "/api/v1/series" => {:GET=>[:series]},
-      "/api/v1/label/{label_name}/values" => {:GET=>[:label_values]},
-      "/api/v1/targets" => {:GET=>[:targets]},
-      "/api/v1/alert_managers" => {:GET=>[:alertmanagers]}
+      "/query" => {:GET=>[:query]},
+      "/query_range" => {:GET=>[:query_range]},
+      "/series" => {:GET=>[:series]},
+      "/label/{label_name}/values" => {:GET=>[:label_values]},
     }
   end
 end

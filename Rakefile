@@ -31,3 +31,12 @@ task :masterdata => [:dotenv] do
   end
 end
 
+desc "Run metrics tests"
+task :metrics => [:dotenv] do
+  Rake::TestTask.new do |t|
+    t.name = 'metrics'
+    t.libs << "test/integration"
+    t.test_files = FileList['test/integration/metrics_test.rb']
+    t.verbose = true
+  end
+end
