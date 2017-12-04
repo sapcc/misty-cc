@@ -1,18 +1,14 @@
-require 'misty/http/client'
+require 'misty/client_pack'
 require "misty/openstack/limes/limes_v1"
 
 module Misty
   module Openstack
     module Limes
-      class V1 < Misty::HTTP::Client
-        extend Misty::Openstack::LimesV1
+      class V1
+        include Misty::Openstack::LimesV1
+        include Misty::ClientPack
 
-        def self.api
-          # https://github.com/sapcc/limes/blob/master/docs/design/002-public-api.md
-          v1
-        end
-
-        def self.service_names
+        def service_names
           %w{resources}
         end
       end

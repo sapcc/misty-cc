@@ -1,17 +1,14 @@
-require 'misty/http/client'
+require 'misty/client_pack'
 require "misty/openstack/ccmasterdata/ccmasterdata_v2"
 
 module Misty
   module Openstack
     module Ccmasterdata
-      class V2 < Misty::HTTP::Client
-        extend Misty::Openstack::CcmasterdataV2
+      class V2
+        include Misty::Openstack::CcmasterdataV2
+        include Misty::ClientPack
 
-        def self.api
-          v2
-        end
-
-        def self.service_names
+        def service_names
           # this is used to find the correct endpoint (type) in the service catalog
           %w{sapcc-billing}
         end
