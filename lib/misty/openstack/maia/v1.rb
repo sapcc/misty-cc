@@ -1,18 +1,14 @@
-require 'misty/http/client'
+require 'misty/client_pack'
 require "misty/openstack/maia/maia_v1"
 
 module Misty
   module Openstack
     module Maia
-      class V1 < Misty::HTTP::Client
-        extend Misty::Openstack::MaiaV1
+      class V1
+        include Misty::Openstack::MaiaV1
+        include Misty::ClientPack
 
-        def self.api
-          # https://documentation.global.cloud.sap/docs/metrics/developers-guide.html
-          v1
-        end
-
-        def self.service_names
+        def service_names
           %w{metrics}
         end
       end

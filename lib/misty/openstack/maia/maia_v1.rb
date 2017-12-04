@@ -1,5 +1,5 @@
 module Misty::Openstack::MaiaV1
-  def v1
+  def api
     {
       # https://prometheus.io/docs/prometheus/latest/querying/api/
       # Note: the query string is the last parameter and automatically added if existing
